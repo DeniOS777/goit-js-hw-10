@@ -37,6 +37,8 @@ function onInputEnterValue(e) {
     .catch(error => {
       console.log(error);
       errorHandler();
+      refs.countryList.innerHTML = '';
+      refs.countryInfo.innerHTML = '';
     });
 }
 const FILTER_PARAMS = 'fields=name,capital,population,flags,languages';
