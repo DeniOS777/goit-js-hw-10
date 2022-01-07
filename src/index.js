@@ -1,5 +1,6 @@
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 import './css/styles.css';
 
 const DEBOUNCE_DELAY = 300;
@@ -12,17 +13,14 @@ const refs = {
 
 refs.input.addEventListener('input', debounce(onInputEnterValue, DEBOUNCE_DELAY));
 
-let querySearch = '';
-const FILTER_PARAMS = 'fields=name,capital,population,flags,languages';
-
 function onInputEnterValue(e) {
-  querySearch = e.target.value.trim();
-  if (querySearch === '') {
+  const searchQuery = e.target.value.trim();
+  if (searchQuery === '') {
     refs.countryList.innerHTML = '';
     refs.countryInfo.innerHTML = '';
     return;
   }
-  fetchCountries()
+  fetchCountries(searchQuery)
     .then(countrys => {
       if (countrys.length > 10) {
         return Notify.info('Too many matches found. Please enter a more specific name.');
@@ -31,18 +29,25 @@ function onInputEnterValue(e) {
         refs.countryInfo.innerHTML = '';
         renderCountrys(countrys);
       } else {
+        console.log(countrys);
         refs.countryList.innerHTML = '';
         renderCountry(countrys);
       }
     })
     .catch(error => {
       console.log(error);
+      errorHandler();
     });
 }
+const FILTER_PARAMS = 'fields=name,capital,population,flags,languages';
 
-function fetchCountries() {
-  return fetch(`https://restcountries.com/v3.1/name/${querySearch}?${FILTER_PARAMS}`).then(
+function fetchCountries(searchQuery) {
+  return fetch(`https://restcountries.com/v3.1/name/${searchQuery}?${FILTER_PARAMS}`).then(
     response => {
+      if (response.status !== 200) {
+        throw new Error(response.status);
+      }
+      console.log(response);
       return response.json();
     },
   );
@@ -71,8 +76,12 @@ function renderCountry(countrys) {
       </ul>
       <p><span class="country-info__text">Capital:</span> ${capital}</p>
       <p><span class="country-info__text">Population:</span> ${population}</p>
-      <p><span class="country-info__text">Language:</span> German, ${languages}</p>`;
+      <p><span class="country-info__text">Language:</span> ${languages}</p>`;
     })
     .join('');
   refs.countryInfo.insertAdjacentHTML('beforeend', markup);
+}
+
+function errorHandler() {
+  Notify.failure('Oops, there is no country with that name.');
 }
