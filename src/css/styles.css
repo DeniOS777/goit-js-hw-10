@@ -22,7 +22,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #fafafa;
-  color: #575757;
+  color: #3f3f3f;
   line-height: 1.5;
 }
 
@@ -53,7 +53,10 @@ body {
 
 .country-name {
   margin-left: 10px;
+  font-size: 26px;
+  font-weight: 700;
 }
 .country-info__text {
+  color: #000000;
   font-weight: 700;
 }
