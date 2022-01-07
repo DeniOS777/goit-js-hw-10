@@ -31,7 +31,7 @@ function onInputEnterValue(e) {
         console.log(countrys);
         return renderCountrys(countrys);
       }
-      return renderCountry(countrys);
+      renderCountry(countrys);
     })
     .catch(error => {
       console.log(error);
@@ -60,12 +60,17 @@ function renderCountrys(countrys) {
 
 function renderCountry(countrys) {
   const markup = countrys
-    .map(({ population, languages, capital }) => {
-      return `<p class="country-info__text">Capital: ${capital}</p>
-      <p class="country-info__text">Population: ${population}</p>
-      <p class="country-info__text">Language: German, ${languages}</p>`;
+    .map(({ flags, name, population, languages, capital }) => {
+      return `<ul class="country-list">
+        <li class="country-item">
+          <img src="${flags.svg}" width="30" alt="Country flag" />
+          <p class="country-name">${name.common}</p>
+        </li>
+      </ul>
+      <p><span class="country-info__text">Capital:</span> ${capital}</p>
+      <p><span class="country-info__text">Population:</span> ${population}</p>
+      <p><span class="country-info__text">Language:</span> German, ${languages}</p>`;
     })
     .join('');
-
   refs.countryInfo.insertAdjacentHTML('beforeend', markup);
 }
