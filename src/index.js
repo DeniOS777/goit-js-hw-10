@@ -1,4 +1,5 @@
 import debounce from 'lodash.debounce';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import './css/styles.css';
 
 const DEBOUNCE_DELAY = 300;
@@ -17,15 +18,20 @@ const FILTER_PARAMS = 'fields=name,capital,population,flags,languages';
 function onInputEnterValue(e) {
   querySearch = e.target.value.trim();
   if (querySearch === '') {
+    refs.countryList.innerHTML = '';
+    refs.countryInfo.innerHTML = '';
     return;
   }
   fetchCountries()
     .then(countrys => {
       if (countrys.length > 10) {
-        return console.log('Too many matches found. Please enter a more specific name.');
+        return Notify.info('Too many matches found. Please enter a more specific name.');
       }
-      console.log(countrys);
-      renderFindCountrys(countrys);
+      if (countrys.length >= 2 && countrys.length <= 10) {
+        console.log(countrys);
+        return renderCountrys(countrys);
+      }
+      return renderCountry(countrys);
     })
     .catch(error => {
       console.log(error);
@@ -40,7 +46,7 @@ function fetchCountries() {
   );
 }
 
-function renderFindCountrys(countrys) {
+function renderCountrys(countrys) {
   const markup = countrys
     .map(({ flags, name }) => {
       return `<li class="country-item">
@@ -50,4 +56,16 @@ function renderFindCountrys(countrys) {
     })
     .join('');
   refs.countryList.insertAdjacentHTML('beforeend', markup);
+}
+
+function renderCountry(countrys) {
+  const markup = countrys
+    .map(({ population, languages, capital }) => {
+      return `<p class="country-info__text">Capital: ${capital}</p>
+      <p class="country-info__text">Population: ${population}</p>
+      <p class="country-info__text">Language: German, ${languages}</p>`;
+    })
+    .join('');
+
+  refs.countryInfo.insertAdjacentHTML('beforeend', markup);
 }
