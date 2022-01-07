@@ -54,3 +54,6 @@ body {
 .country-name {
   margin-left: 10px;
 }
+.country-info__text {
+  font-weight: 700;
+}
