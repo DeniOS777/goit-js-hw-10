@@ -26,12 +26,14 @@ function onInputEnterValue(e) {
     .then(countrys => {
       if (countrys.length > 10) {
         return Notify.info('Too many matches found. Please enter a more specific name.');
-      }
-      if (countrys.length >= 2 && countrys.length <= 10) {
+      } else if (countrys.length >= 2 && countrys.length <= 10) {
         console.log(countrys);
-        return renderCountrys(countrys);
+        refs.countryInfo.innerHTML = '';
+        renderCountrys(countrys);
+      } else {
+        refs.countryList.innerHTML = '';
+        renderCountry(countrys);
       }
-      renderCountry(countrys);
     })
     .catch(error => {
       console.log(error);
@@ -50,7 +52,7 @@ function renderCountrys(countrys) {
   const markup = countrys
     .map(({ flags, name }) => {
       return `<li class="country-item">
-        <img src="${flags.svg}" width="30" alt="Country flag" />
+        <img src="${flags.svg}" width="40" alt="Country flag" />
         <p class="country-name">${name.common}</p>
       </li>`;
     })
@@ -63,7 +65,7 @@ function renderCountry(countrys) {
     .map(({ flags, name, population, languages, capital }) => {
       return `<ul class="country-list">
         <li class="country-item">
-          <img src="${flags.svg}" width="30" alt="Country flag" />
+          <img src="${flags.svg}" width="40" alt="Country flag" />
           <p class="country-name">${name.common}</p>
         </li>
       </ul>
