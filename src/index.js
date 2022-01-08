@@ -3,7 +3,6 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { fetchCountries } from './fetchCountries';
 
-import renderCountryTpl from '../src/templates/renderCountryTpl';
 import renderCountrysTpl from '../src/templates/renderCountrysTpl';
 
 import './css/styles.css';
@@ -52,7 +51,21 @@ function renderCountrys(countrys) {
 }
 
 function renderCountry(countrys) {
-  const markup = renderCountryTpl(countrys);
+  const markup = countrys
+    .map(({ flags, name, population, languages, capital }) => {
+      return `<ul class="country-info-list">
+        <li class="country-item">
+          <img src="${flags.svg}" width="40" heigth="40" alt="Country flag" />
+          <p class="country-name">${name.common}</p>
+        </li>
+      </ul>
+      <p class="country-info"><span class="country-info__text">Capital:</span> ${capital}</p>
+      <p class="country-info"><span class="country-info__text">Population:</span> ${population}</p>
+      <p class="country-info"><span class="country-info__text">Language:</span> ${Object.values(
+        languages,
+      )}</p>`;
+    })
+    .join('');
   refs.countryInfo.insertAdjacentHTML('beforeend', markup);
 }
 
