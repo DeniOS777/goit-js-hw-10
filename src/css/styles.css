@@ -24,6 +24,7 @@ body {
   background-color: #fafafa;
   color: #000000;
   line-height: 1.5;
+  font-size: 22px;
 }
 
 #search-box {
@@ -57,11 +58,15 @@ body {
 
 .country-name {
   margin-left: 10px;
-  font-size: 26px;
+  font-size: 24px;
+}
+
+.country-name-big {
+  font-size: 42px;
   font-weight: 700;
 }
+
 .country-info__text {
-  font-size: 22px;
   font-weight: 700;
 }
 
