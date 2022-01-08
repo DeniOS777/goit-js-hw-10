@@ -2,7 +2,7 @@ import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { fetchCountries } from './fetchCountries';
-import renderCountrysTpl from '../src/templates/renderCountrysTpl';
+import renderCountriesTpl from '../src/templates/renderCountriesTpl';
 
 import './css/styles.css';
 
@@ -47,7 +47,7 @@ function onInputEnterValue(e) {
 }
 
 function renderCountrys(countrys) {
-  const markup = renderCountrysTpl(countrys);
+  const markup = renderCountriesTpl(countrys);
   refs.countryList.insertAdjacentHTML('beforeend', markup);
 }
 
