@@ -2,7 +2,6 @@ import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { fetchCountries } from './fetchCountries';
-
 import renderCountrysTpl from '../src/templates/renderCountrysTpl';
 
 import './css/styles.css';
@@ -31,10 +30,12 @@ function onInputEnterValue(e) {
       if (countrys.length >= 2 && countrys.length <= 10) {
         console.log(countrys);
         refs.countryInfo.innerHTML = '';
+        Notify.success('You found some countrys');
         return renderCountrys(countrys);
       } else {
         console.log(countrys);
         refs.countryList.innerHTML = '';
+        Notify.success('You found one country, see detailed information');
         return renderCountry(countrys);
       }
     })
