@@ -6,13 +6,13 @@ import renderCountriesTpl from '../src/templates/renderCountriesTpl';
 
 import './css/styles.css';
 
-const DEBOUNCE_DELAY = 300;
-
 const refs = {
   input: document.querySelector('#search-box'),
   countryList: document.querySelector('.country-list'),
   countryInfo: document.querySelector('.country-info'),
 };
+
+const DEBOUNCE_DELAY = 300;
 
 refs.input.addEventListener('input', debounce(onInputEnterValue, DEBOUNCE_DELAY));
 
