@@ -28,12 +28,10 @@ function onInputEnterValue(e) {
         return cleaningRenderCountrys();
       }
       if (countrys.length >= 2 && countrys.length <= 10) {
-        console.log(countrys);
         refs.countryInfo.innerHTML = '';
         Notify.success('You found some countrys');
         return renderCountrys(countrys);
       } else {
-        console.log(countrys);
         refs.countryList.innerHTML = '';
         Notify.success('You found one country, see detailed information');
         return renderCountry(countrys);
