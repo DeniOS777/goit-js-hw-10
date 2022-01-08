@@ -2,6 +2,7 @@ import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { fetchCountries } from './fetchCountries';
+import renderCountrysTpl from '../src/templates/renderCountrysTpl';
 
 import './css/styles.css';
 
@@ -33,7 +34,7 @@ function onInputEnterValue(e) {
       } else {
         console.log(countrys);
         refs.countryList.innerHTML = '';
-        renderCountry(countrys);
+        return renderCountry(countrys);
       }
     })
     .catch(error => {
@@ -43,42 +44,23 @@ function onInputEnterValue(e) {
     });
 }
 
-// function fetchCountries(searchQuery) {
-//   return fetch(`https://restcountries.com/v3.1/name/${searchQuery}?${FILTER_PARAMS}`).then(
-//     response => {
-//       if (response.status !== 200) {
-//         throw new Error(response.status);
-//       }
-//       console.log(response);
-//       return response.json();
-//     },
-//   );
-// }
-
 function renderCountrys(countrys) {
-  const markup = countrys
-    .map(({ flags, name }) => {
-      return `<li class="country-item">
-        <img src="${flags.svg}" width="40" alt="Country flag" />
-        <p class="country-name">${name.common}</p>
-      </li>`;
-    })
-    .join('');
+  const markup = renderCountrysTpl(countrys);
   refs.countryList.insertAdjacentHTML('beforeend', markup);
 }
 
 function renderCountry(countrys) {
   const markup = countrys
     .map(({ flags, name, population, languages, capital }) => {
-      return `<ul class="country-list">
+      return `<ul class="country-info-list">
         <li class="country-item">
           <img src="${flags.svg}" width="40" alt="Country flag" />
           <p class="country-name">${name.common}</p>
         </li>
       </ul>
-      <p><span class="country-info__text">Capital:</span> ${capital}</p>
-      <p><span class="country-info__text">Population:</span> ${population}</p>
-      <p><span class="country-info__text">Language:</span> ${languages}</p>`;
+      <p class="country-info"><span class="country-info__text">Capital:</span> ${capital}</p>
+      <p class="country-info"><span class="country-info__text">Population:</span> ${population}</p>
+      <p class="country-info"><span class="country-info__text">Language:</span> ${languages}</p>`;
     })
     .join('');
   refs.countryInfo.insertAdjacentHTML('beforeend', markup);
@@ -92,3 +74,15 @@ function cleaningRenderCountrys() {
   refs.countryList.innerHTML = '';
   refs.countryInfo.innerHTML = '';
 }
+
+// function renderCountrys(countrys) {
+//   const markup = countrys
+//     .map(({ flags, name }) => {
+//       return `<li class="country-item">
+//         <img src="${flags.svg}" width="40" alt="Country flag" />
+//         <p class="country-name">${name.common}</p>
+//       </li>`;
+//     })
+//     .join('');
+//   refs.countryList.insertAdjacentHTML('beforeend', markup);
+// }
