@@ -1,11 +1,11 @@
 import debounce from 'lodash.debounce';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
+import { fetchCountries } from './fetchCountries';
+
 import './css/styles.css';
 
 const DEBOUNCE_DELAY = 300;
-
-const FILTER_PARAMS = 'fields=name,capital,population,flags,languages';
 
 const refs = {
   input: document.querySelector('#search-box'),
@@ -43,17 +43,17 @@ function onInputEnterValue(e) {
     });
 }
 
-function fetchCountries(searchQuery) {
-  return fetch(`https://restcountries.com/v3.1/name/${searchQuery}?${FILTER_PARAMS}`).then(
-    response => {
-      if (response.status !== 200) {
-        throw new Error(response.status);
-      }
-      console.log(response);
-      return response.json();
-    },
-  );
-}
+// function fetchCountries(searchQuery) {
+//   return fetch(`https://restcountries.com/v3.1/name/${searchQuery}?${FILTER_PARAMS}`).then(
+//     response => {
+//       if (response.status !== 200) {
+//         throw new Error(response.status);
+//       }
+//       console.log(response);
+//       return response.json();
+//     },
+//   );
+// }
 
 function renderCountrys(countrys) {
   const markup = countrys
