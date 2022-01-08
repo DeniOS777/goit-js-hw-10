@@ -56,7 +56,7 @@ function renderCountry(countrys) {
       return `<ul class="country-info-list">
         <li class="country-item">
           <img src="${flags.svg}" width="40" heigth="40" alt="Country flag" />
-          <p class="country-name">${name.common}</p>
+          <p class="country-name country-name-big">${name.common}</p>
         </li>
       </ul>
       <p class="country-info"><span class="country-info__text">Capital:</span> ${capital}</p>
