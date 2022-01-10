@@ -18,22 +18,27 @@ refs.input.addEventListener('input', debounce(onInputEnterValue, DEBOUNCE_DELAY)
 
 function onInputEnterValue(e) {
   const searchQuery = e.target.value.trim();
-  if (searchQuery === '') {
+
+  if (!searchQuery) {
     return cleaningRenderCountrys();
   }
+
   fetchCountries(searchQuery)
     .then(countrys => {
       if (countrys.length > 10) {
         Notify.info('Too many matches found. Please enter a more specific name.');
         return cleaningRenderCountrys();
       }
+
       if (countrys.length >= 2 && countrys.length <= 10) {
         refs.countryInfo.innerHTML = '';
         Notify.success('You found some countrys');
+        cleaningRenderCountrys();
         return renderCountrys(countrys);
       } else {
         refs.countryList.innerHTML = '';
         Notify.success('You found one country, see detailed information');
+        cleaningRenderCountrys();
         return renderCountry(countrys);
       }
     })
