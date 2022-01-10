@@ -50,6 +50,7 @@ body {
 
 .country-item {
   display: flex;
+  align-items: center;
 }
 
 .country-item + .country-item {
