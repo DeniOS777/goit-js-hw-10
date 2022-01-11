@@ -3,6 +3,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 import { fetchCountries } from './fetchCountries';
 import renderCountriesTpl from '../src/templates/renderCountriesTpl';
+import renderCountryTpl from '../src/templates/renderCountryTpl';
 
 import './css/styles.css';
 
@@ -55,21 +56,7 @@ function renderCountrys(countrys) {
 }
 
 function renderCountry(countrys) {
-  const markup = countrys
-    .map(({ flags, name, population, languages, capital }) => {
-      return `<ul class="country-info-list">
-        <li class="country-item">
-          <img src="${flags.svg}" width="4%" alt="Country flag" />
-          <p class="country-name country-name-big">${name.common}</p>
-        </li>
-      </ul>
-      <p class="country-info"><span class="country-info__text">Capital:</span> ${capital}</p>
-      <p class="country-info"><span class="country-info__text">Population:</span> ${population}</p>
-      <p class="country-info"><span class="country-info__text">Language:</span> ${Object.values(
-        languages,
-      )}</p>`;
-    })
-    .join('');
+  const markup = renderCountryTpl(countrys);
   refs.countryInfo.insertAdjacentHTML('beforeend', markup);
 }
 
@@ -81,3 +68,22 @@ function cleaningRenderCountrys() {
   refs.countryList.innerHTML = '';
   refs.countryInfo.innerHTML = '';
 }
+
+// function renderCountry(countrys) {
+//   const markup = countrys
+//     .map(({ flags, name, population, languages, capital }) => {
+//       return `<ul class="country-info-list">
+//         <li class="country-item">
+//           <img src="${flags.svg}" width="4%" alt="Country flag" />
+//           <p class="country-name country-name-big">${name.common}</p>
+//         </li>
+//       </ul>
+//       <p class="country-info"><span class="country-info__text">Capital:</span> ${capital}</p>
+//       <p class="country-info"><span class="country-info__text">Population:</span> ${population}</p>
+//       <p class="country-info"><span class="country-info__text">Language:</span> ${Object.values(
+//         languages,
+//       )}</p>`;
+//     })
+//     .join('');
+//   refs.countryInfo.insertAdjacentHTML('beforeend', markup);
+// }
